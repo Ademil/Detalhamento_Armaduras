@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhamento Completo de Armaduras - Vigas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --info-color: #17a2b8;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #1a5276, #2c3e50);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: white;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.4rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .tabs-container {
+            display: flex;
+            background-color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 18px 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            background-color: #e9ecef;
+        }
+        
+        .tab.active {
+            background-color: white;
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .input-with-unit {
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-with-unit input, .input-with-unit select {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .input-with-unit input:focus, .input-with-unit select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .unit {
+            background-color: #f8f9fa;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            color: #666;
+        }
+        
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--info-color);
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .warning-box {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 0.95rem;
+            color: #8a6d3b;
+        }
+        
+        .danger-box {
+            background-color: #fdeaea;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 0.95rem;
+            color: #a94442;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        button {
+            padding: 16px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            flex: 2;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .reset-btn {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            border: 1px solid #ddd;
+            flex: 1;
+        }
+        
+        .reset-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .result-card.highlight {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .result-card.warning {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .result-card.success {
+            background-color: #e8f8ef;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .result-card.danger {
+            background-color: #fdeaea;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .result-unit {
+            font-size: 1.1rem;
+            color: #666;
+            margin-left: 5px;
+        }
+        
+        .result-detail {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .viga-visual {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .secao-transversal {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .validation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .validation-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+        }
+        
+        .validation-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        .valid {
+            background-color: var(--success-color);
+        }
+        
+        .warning {
+            background-color: var(--warning-color);
+        }
+        
+        .invalid {
+            background-color: var(--accent-color);
+        }
+        
+        .section-special {
+            background-color: #f0f7ff;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid #b3d7ff;
+        }
+        
+        .special-title {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .disclaimer {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 0.95rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 30px;
+        }
+        
+        .norma-ref {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .tabs-horizontal {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 5px;
+        }
+        
+        .tab-horizontal {
+            padding: 12px 20px;
+            white-space: nowrap;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: var(--border-radius);
+            margin-right: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+        
+        .tab-horizontal.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        @media (max-width: 992px) {
+            .tabs-container {
+                flex-direction: column;
+            }
+            
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .icon-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-drafting-compass"></i> Detalhamento Completo de Armaduras para Vigas</h1>
+            <p class="subtitle">Conforme princípios da <span class="norma-ref">NBR 6118:2014</span> e apresentação sobre detalhamento</p>
+        </header>
+        
+        <div class="tabs-container">
+            <button class="tab active" data-tab="tab-detalhamento">
+                <i class="fas fa-cogs"></i> Detalhamento Principal
+            </button>
+            <button class="tab" data-tab="tab-ancoragem">
+                <i class="fas fa-anchor"></i> Ancoragem e Emendas
+            </button>
+            <button class="tab" data-tab="tab-especiais">
+                <i class="fas fa-exclamation-triangle"></i> Situações Especiais
+            </button>
+        </div>
+        
+        <!-- ABA 1: DETALHAMENTO PRINCIPAL -->
+        <div id="tab-detalhamento" class="tab-content active">
+            <h2 class="section-title"><i class="fas fa-cogs"></i> Detalhamento Principal - NBR 6118</h2>
+            
+            <div class="input-grid">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-ruler"></i> Dimensões da Viga</h3>
+                    
+                    <div class="input-group">
+                        <label for="bw">Largura da viga (b<sub>w</sub>)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="bw" min="0.1" max="2.0" step="0.05" value="0.20">
+                            <span class="unit">m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="h">Altura total (h)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="h" min="0.2" max="2.0" step="0.05" value="0.60">
+                            <span class="unit">m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="d">Altura útil (d)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="d" min="0.15" max="1.9" step="0.01" value="0.55">
+                            <span class="unit">m</span>
+                        </div>
+                        <div class="info-box">
+                            <p><strong>d = h - c - φ<sub>estribo</sub> - φ<sub>long</sub>/2</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="classe-agressividade">Classe de Agressividade Ambiental (CAA)</label>
+                        <select id="classe-agressividade">
+                            <option value="I" selected>I - Rural ou urbano não poluído</option>
+                            <option value="II">II - Urbano ou marinho fraco</option>
+                            <option value="III">III - Industrial ou marinho moderado</option>
+                            <option value="IV">IV - Industrial agressivo ou marinho forte</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="section-title"><i class="fas fa-weight-hanging"></i> Armaduras Longitudinais</h3>
+                    
+                    <div class="input-group">
+                        <label for="as-tracao">Área de aço tracionada (A<sub>s</sub>)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="as-tracao" min="0.1" max="100" step="0.1" value="8.0">
+                            <span class="unit">cm²</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="as-compressao">Área de aço comprimida (A'<sub>s</sub>)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="as-compressao" min="0" max="100" step="0.1" value="0.0">
+                            <span class="unit">cm²</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="diametro-long">Diâmetro das barras longitudinais (φ)</label>
+                        <div class="input-with-unit">
+                            <select id="diametro-long">
+                                <option value="8">φ 8 mm</option>
+                                <option value="10" selected>φ 10 mm</option>
+                                <option value="12.5">φ 12.5 mm</option>
+                                <option value="16">φ 16 mm</option>
+                                <option value="20">φ 20 mm</option>
+                                <option value="25">φ 25 mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="num-camadas">Número de camadas longitudinais</label>
+                        <div class="input-with-unit">
+                            <select id="num-camadas">
+                                <option value="1" selected>1 camada</option>
+                                <option value="2">2 camadas</option>
+                                <option value="3">3 camadas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="section-title"><i class="fas fa-grip-lines-vertical"></i> Armaduras Transversais</h3>
+                    
+                    <div class="input-group">
+                        <label for="diametro-estribo">Diâmetro dos estribos (φ<sub>t</sub>)</label>
+                        <div class="input-with-unit">
+                            <select id="diametro-estribo">
+                                <option value="5" selected>φ 5 mm (CA-60)</option>
+                                <option value="6.3">φ 6.3 mm (CA-60)</option>
+                                <option value="8">φ 8 mm (CA-50)</option>
+                                <option value="10">φ 10 mm (CA-50)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="espacamento-estribo">Espaçamento dos estribos (s)</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="espacamento-estribo" min="5" max="30" step="0.5" value="15">
+                            <span class="unit">cm</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="num-ramos">Número de ramos (pernas)</label>
+                        <div class="input-with-unit">
+                            <select id="num-ramos">
+                                <option value="2" selected>2 ramos</option>
+                                <option value="3">3 ramos</option>
+                                <option value="4">4 ramos</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Estribos devem ser fechados com ganchos a 135°</strong></p>
+                        <p>Diâmetro do pino de dobramento ≥ 5φ<sub>t</sub> (para φ<sub>t</sub> ≤ 20mm)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tabs-horizontal">
+                <button class="tab-horizontal active" data-subtab="subtab-cobrimento">Cobrimento</button>
+                <button class="tab-horizontal" data-subtab="subtab-minimo">Armadura Mínima</button>
+                <button class="tab-horizontal" data-subtab="subtab-maximo">Armadura Máxima</button>
+                <button class="tab-horizontal" data-subtab="subtab-pele">Armadura de Pele</button>
+                <button class="tab-horizontal" data-subtab="subtab-espacamento">Espaçamentos</button>
+            </div>
+            
+            <!-- Sub-aba: Cobrimento -->
+            <div id="subtab-cobrimento" class="subtab-content active">
+                <div class="section-special">
+                    <h3 class="special-title"><i class="fas fa-hard-hat"></i> Cobrimento das Armaduras</h3>
+                    
+                    <div class="info-box">
+                        <p>O cobrimento mínimo (c<sub>nom</sub>) depende da classe de agressividade ambiental:</p>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Classe de Agressividade</th>
+                                    <th>Descrição</th>
+                                    <th>Cobrimento Vigas (mm)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>I</td>
+                                    <td>Ambiente rural ou urbano não poluído</td>
+                                    <td>25</td>
+                                </tr>
+                                <tr>
+                                    <td>II</td>
+                                    <td>Ambiente urbano ou marinho fraco</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>III</td>
+                                    <td>Ambiente industrial ou marinho moderado</td>
+                                    <td>40</td>
+                                </tr>
+                                <tr>
+                                    <td>IV</td>
+                                    <td>Ambiente industrial agressivo ou marinho forte</td>
+                                    <td>50</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Cobrimento nominal mínimo</div>
+                        <div class="result-value" id="cobrimento-min">25 <span class="result-unit">mm</span></div>
+                        <div class="result-detail">Para Classe de Agressividade I</div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <p><strong>Espaçadores plásticos:</strong> Utilizar rosetas, cadeirinhas ou caranguejos para garantir o cobrimento durante a concretagem.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sub-aba: Armadura Mínima -->
+            <div id="subtab-minimo" class="subtab-content">
+                <div class="section-special">
+                    <h3 class="special-title"><i class="fas fa-arrow-down"></i> Armadura Mínima de Tração</h3>
+                    
+                    <div class="info-box">
+                        <p>A armadura mínima de tração deve respeitar uma taxa geométrica mínima de <strong>0,15%</strong> da seção de concreto (A<sub>c</sub>):</p>
+                        <p><strong>A<sub>s,min</sub> = 0,15% × b<sub>w</sub> × h</strong></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Área mínima de aço (A<sub>s,min</sub>)</div>
+                        <div class="result-value" id="as-min">0.0 <span class="result-unit">cm²</span></div>
+                        <div class="result-detail">Calculado para as dimensões da viga</div>
+                    </div>
+                    
+                    <div class="validation-grid" id="validacao-min">
+                        <!-- Validação será inserida via JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sub-aba: Armadura Máxima -->
+            <div id="subtab-maximo" class="subtab-content">
+                <div class="section-special">
+                    <h3 class="special-title"><i class="fas fa-arrow-up"></i> Armadura Máxima</h3>
+                    
+                    <div class="danger-box">
+                        <p>A soma das armaduras de tração e compressão (A<sub>s</sub> + A'<sub>s</sub>) não pode ultrapassar <strong>4%</strong> da seção de concreto:</p>
+                        <p><strong>A<sub>s</sub> + A'<sub>s</sub> ≤ 4% × b<sub>w</sub> × h</strong></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Área máxima de aço (A<sub>s,max</sub>)</div>
+                        <div class="result-value" id="as-max">0.0 <span class="result-unit">cm²</span></div>
+                        <div class="result-detail">4% da área de concreto</div>
+                    </div>
+                    
+                    <div class="validation-grid" id="validacao-max">
+                        <!-- Validação será inserida via JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sub-aba: Armadura de Pele -->
+            <div id="subtab-pele" class="subtab-content">
+                <div class="section-special">
+                    <h3 class="special-title"><i class="fas fa-grip-lines"></i> Armadura de Pele (Costela)</h3>
+                    
+                    <div class="info-box">
+                        <p>Armadura lateral para limitar abertura de fissuras em vigas com altura superior a <strong>60 cm</strong>:</p>
+                        <p><strong>A<sub>s,pele</sub> = 0,10% × b<sub>w</sub> × h</strong> (em cada face lateral)</p>
+                        <p>Espaçamento máximo: <strong>20 cm</strong> ou <strong>d/3</strong></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Armadura de pele necessária</div>
+                        <div class="result-value" id="as-pele">0.0 <span class="result-unit">cm²/face</span></div>
+                        <div class="result-detail">Aplicável apenas se h > 60 cm</div>
+                    </div>
+                    
+                    <div class="validation-grid" id="validacao-pele">
+                        <!-- Validação será inserida via JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sub-aba: Espaçamentos -->
+            <div id="subtab-espacamento" class="subtab-content">
+                <div class="section-special">
+                    <h3 class="special-title"><i class="fas fa-ruler"></i> Espaçamentos Mínimos</h3>
+                    
+                    <div class="info-box">
+                        <p><strong>Espaçamento horizontal mínimo entre barras:</strong></p>
+                        <p>Máximo entre {20 mm, φ<sub>barra</sub>, 1,2 × d<sub>max</sub>}</p>
+                        <p>Onde d<sub>max</sub> = dimensão máxima do agregado graúdo (geralmente 19 mm)</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Espaçamento vertical mínimo entre barras:</strong></p>
+                        <p>Máximo entre {20 mm, φ<sub>barra</sub>, 0,5 × d<sub>max</sub>}</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Espaçamento máximo dos estribos:</strong></p>
+                        <p>Menor valor entre {0,6 × d, 30 cm} (região de maior cisalhamento)</p>
+                        <p>Podendo chegar a 0,75 × d em regiões com menor cisalhamento</p>
+                    </div>
+                    
+                    <div class="results-container">
+                        <div class="result-card">
+                            <div class="result-label">Espaçamento horizontal mínimo</div>
+                            <div class="result-value" id="esp-min-h">0 <span class="result-unit">mm</span></div>
+                            <div class="result-detail">máx {20mm, φ, 1.2×19mm}</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-label">Espaçamento vertical mínimo</div>
+                            <div class="result-value" id="esp-min-v">0 <span class="result-unit">mm</span></div>
+                            <div class="result-detail">máx {20mm, φ, 0.5×19mm}</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-label">Espaçamento máximo estribos</div>
+                            <div class="result-value" id="esp-max-estribo">0 <span class="result-unit">cm</span></div>
+                            <div class="result-detail">menor {0,6×d, 30cm}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="calculate-btn" id="calcular-detalhamento">
+                    <i class="fas fa-calculator"></i> Calcular Detalhamento
+                </button>
+                <button class="reset-btn" id="limpar-detalhamento">
+                    <i class="fas fa-redo"></i> Limpar
+                </button>
+            </div>
+            
+            <div class="results-container" id="resultados-detalhamento">
+                <!-- Resultados serão inseridos via JavaScript -->
+            </div>
+            
+            <div class="viga-visual">
+                <h3 class="section-title"><i class="fas fa-drafting-compass"></i> Visualização da Seção Transversal</h3>
+                <div class="secao-transversal" id="secao-transversal">
+                    <!-- Representação gráfica será inserida aqui -->
+                </div>
+                <p>Representação esquemática do arranjo de armaduras na seção transversal da viga</p>
+            </div>
+        </div>
+        
+        <!-- ABA 2: ANCORAGEM E EMENDAS -->
+        <div id="tab-ancoragem" class="tab-content">
+            <h2 class="section-title"><i class="fas fa-anchor"></i> Ancoragem e Emendas de Armaduras</h2>
+            
+            <div class="input-grid">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-link"></i> Ancoragem</h3>
+                    
+                    <div class="input-group">
+                        <label for="fck-ancoragem">Resistência do concreto (f<sub>ck</sub>)</label>
+                        <div class="input-with-unit">
+                            <select id="fck-ancoragem">
+                                <option value="25">C25 - 25 MPa</option>
+                                <option value="30" selected>C30 - 30 MPa</option>
+                                <option value="35">C35 - 35 MPa</option>
+                                <option value="40">C40 - 40 MPa</option>
+                                <option value="45">C45 - 45 MPa</option>
+                                <option value="50">C50 - 50 MPa</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fyk-ancoragem">Resistência do aço (f<sub>yk</sub>)</label>
+                        <div class="input-with-unit">
+                            <select id="fyk-ancoragem">
+                                <option value="500" selected>CA-50 - 500 MPa</option>
+                                <option value="600">CA-60 - 600 MPa</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="diametro-ancoragem">Diâmetro da barra (φ)</label>
+                        <div class="input-with-unit">
+                            <select id="diametro-ancoragem">
+                                <option value="8">φ 8 mm</option>
+                                <option value="10" selected>φ 10 mm</option>
+                                <option value="12.5">φ 12.5 mm</option>
+                                <option value="16">φ 16 mm</option>
+                                <option value="20">φ 20 mm</option>
+                                <option value="25">φ 25 mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="zona-aderencia">Zona de aderência</label>
+                        <div class="input-with-unit">
+                            <select id="zona-aderencia">
+                                <option value="boa" selected>Boa aderência</option>
+                                <option value="ma">Má aderência</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="section-title"><i class="fas fa-exchange-alt"></i> Emendas</h3>
+                    
+                    <div class="input-group">
+                        <label for="tipo-emenda">Tipo de emenda</label>
+                        <div class="input-with-unit">
+                            <select id="tipo-emenda">
+                                <option value="tracionada" selected>Barra tracionada</option>
+                                <option value="comprimida">Barra comprimida</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="percentual-emenda">Percentual de barras emendadas</label>
+                        <div class="input-with-unit">
+                            <select id="percentual-emenda">
+                                <option value="100" selected>100% (1 camada)</option>
+                                <option value="50">50% (mais de 1 camada)</option>
+                                <option value="25">25%</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Nota:</strong> Barras CA-50 tracionadas podem ser 100% emendadas na mesma seção quando houver somente 1 camada.</p>
+                        <p>Para mais camadas, máximo de 50% para cada seção.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="calculate-btn" id="calcular-ancoragem">
+                    <i class="fas fa-calculator"></i> Calcular Ancoragem e Emendas
+                </button>
+                <button class="reset-btn" id="limpar-ancoragem">
+                    <i class="fas fa-redo"></i> Limpar
+                </button>
+            </div>
+            
+            <div class="results-container" id="resultados-ancoragem">
+                <!-- Resultados serão inseridos via JavaScript -->
+            </div>
+            
+            <div class="section-special">
+                <h3 class="special-title"><i class="fas fa-info-circle"></i> Comprimentos de Ancoragem Básicos (CA-50)</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Diâmetro (mm)</th>
+                                <th>Boa Aderência (cm)</th>
+                                <th>Má Aderência (cm)</th>
+                                <th>Com Gancho (cm)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-ancoragem">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Ganchos:</strong> Barras lisas (CA-25) devem obrigatoriamente ter gancho semicircular. Para barras de CA-50, o gancho adiciona 12φ ao comprimento de ancoragem.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ABA 3: SITUAÇÕES ESPECIAIS -->
+        <div id="tab-especiais" class="tab-content">
+            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Situações Especiais no Detalhamento</h2>
+            
+            <div class="section-special">
+                <h3 class="special-title"><i class="fas fa-crosshairs"></i> Situação de Apoio Indireto</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="apoio-indireto">
+                    <label for="apoio-indireto">Viga com apoio indireto (cruzamento de vigas)</label>
+                </div>
+                
+                <div class="input-group" id="div-forca-indireta" style="display: none;">
+                    <label for="forca-indireta">Força indireta aplicada (F<sub>ind</sub>)</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="forca-indireta" min="10" max="1000" step="10" value="100">
+                        <span class="unit">kN</span>
+                    </div>
+                </div>
+                
+                <div class="info-box" id="info-apoio-indireto" style="display: none;">
+                    <p><strong>Armadura de suspensão necessária:</strong> A<sub>susp</sub> = F<sub>ind</sub> / f<sub>yd</sub></p>
+                    <p>Distribuir esta armadura em estribos adicionais na região do apoio indireto.</p>
+                </div>
+            </div>
+            
+            <div class="section-special">
+                <h3 class="special-title"><i class="fas fa-sync-alt"></i> Torção</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="torcao">
+                    <label for="torcao">Viga solicitada à torção</label>
+                </div>
+                
+                <div class="input-group" id="div-torcao" style="display: none;">
+                    <label for="momento-torcante">Momento torçor de cálculo (T<sub>d</sub>)</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="momento-torcante" min="1" max="500" step="1" value="50">
+                        <span class="unit">kN.m</span>
+                    </div>
+                </div>
+                
+                <div class="warning-box" id="info-torcao" style="display: none;">
+                    <p><strong>Estribos para torção:</strong> Obrigatoriamente fechados com ganchos a 45°</p>
+                    <p>Espaçamento máximo: 15 cm</p>
+                    <p>Barras longitudinais distribuídas na periferia, com máximo de 35 cm entre barras</p>
+                </div>
+            </div>
+            
+            <div class="section-special">
+                <h3 class="special-title"><i class="fas fa-cut"></i> Furos em Vigas</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="furo-viga">
+                    <label for="furo-viga">Viga com furos/passagens</label>
+                </div>
+                
+                <div class="input-grid" id="div-furo" style="display: none;">
+                    <div>
+                        <div class="input-group">
+                            <label for="diametro-furo">Diâmetro do furo</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="diametro-furo" min="5" max="50" step="1" value="10">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="distancia-apoio">Distância do furo ao apoio</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="distancia-apoio" min="20" max="500" step="5" value="100">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="input-group">
+                            <label for="tipo-furo">Tipo de furo</label>
+                            <select id="tipo-furo">
+                                <option value="transversal">Transversal (na largura)</option>
+                                <option value="vertical">Vertical (na altura)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="info-box">
+                            <p><strong>Critérios NBR 6118 para dispensar verificação:</strong></p>
+                            <p>• Furo ≤ b/3 (transversal) ou ≤ h/3 (vertical)</p>
+                            <p>• Afastamento à face ≥ 5 cm e ≥ 2c</p>
+                            <p>• Distância a apoios ≥ 2h (em zona tracionada)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-special">
+                <h3 class="special-title"><i class="fas fa-compress-arrows-alt"></i> Instabilidade Lateral (Flambagem)</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="flambagem">
+                    <label for="flambagem">Viga sem travamento lateral na zona comprimida</label>
+                </div>
+                
+                <div class="warning-box" id="info-flambagem" style="display: none;">
+                    <p><strong>Vigas sem laje em ambos os lados ou vigas invertidas:</strong></p>
+                    <p>Verificar largura mínima para evitar flambagem lateral:</p>
+                    <p>• Largura mínima recomendada: L/10 a L/15</p>
+                    <p>• Considerar armadura de costela adicional</p>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="calculate-btn" id="calcular-especiais">
+                    <i class="fas fa-calculator"></i> Verificar Situações Especiais
+                </button>
+                <button class="reset-btn" id="limpar-especiais">
+                    <i class="fas fa-redo"></i> Limpar
+                </button>
+            </div>
+            
+            <div class="results-container" id="resultados-especiais">
+                <!-- Resultados serão inseridos via JavaScript -->
+            </div>
+            
+            <div class="disclaimer">
+                <p><strong>Importante:</strong> Situações especiais como torção, apoio indireto e furos em vigas devem ser verificadas cuidadosamente e dimensionadas pelo Método de Bielas e Tirantes quando os critérios simplificados da NBR 6118 não forem atendidos.</p>
+                <p>Sempre consultar um engenheiro estrutural para validação final do projeto.</p>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <p><strong>Atenção:</strong> Esta ferramenta é para fins educacionais e de pré-dimensionamento. O detalhamento final deve ser realizado por profissional habilitado, considerando todas as prescrições da NBR 6118 e condições específicas do projeto.</p>
+            <p>Baseado na apresentação "Detalhamento das armações de vigas de concreto armado".</p>
+        </div>
+        
+        <footer>
+            <p>Ferramenta de Detalhamento de Armaduras para Vigas - Conforme NBR 6118:2014</p>
+            <p>© 2023 - Desenvolvido para auxiliar no entendimento dos princípios de detalhamento estrutural</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sistema de abas principais
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remover classe active de todas as abas e conteúdos
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Adicionar classe active à aba clicada
+                tab.classList.add('active');
+                
+                // Mostrar o conteúdo correspondente
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Sistema de sub-abas horizontais
+        document.querySelectorAll('.tab-horizontal').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remover classe active de todas as sub-abas e conteúdos
+                document.querySelectorAll('.tab-horizontal').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.subtab-content').forEach(c => c.classList.remove('active'));
+                
+                // Adicionar classe active à sub-aba clicada
+                tab.classList.add('active');
+                
+                // Mostrar o conteúdo correspondente
+                const subtabId = tab.getAttribute('data-subtab');
+                document.getElementById(subtabId).classList.add('active');
+            });
+        });
+        
+        // ========== DADOS PARA CÁLCULOS ==========
+        const cobrimentosPorClasse = {
+            'I': { viga: 25, laje: 20 },
+            'II': { viga: 30, laje: 25 },
+            'III': { viga: 40, laje: 35 },
+            'IV': { viga: 50, laje: 45 }
+        };
+        
+        // Tabela de ancoragem para CA-50 (valores aproximados em cm)
+        const tabelaAncoragemCA50 = [
+            { diametro: 8, boa: 30, ma: 43, gancho: 42 },
+            { diametro: 10, boa: 38, ma: 53, gancho: 50 },
+            { diametro: 12.5, boa: 48, ma: 67, gancho: 63 },
+            { diametro: 16, boa: 61, ma: 85, gancho: 77 },
+            { diametro: 20, boa: 76, ma: 107, gancho: 96 },
+            { diametro: 25, boa: 95, ma: 133, gancho: 120 }
+        ];
+        
+        // ========== FUNÇÕES GERAIS ==========
+        function calcularAreaBarra(diametro) {
+            // Área em cm² para diâmetro em mm
+            return Math.PI * Math.pow(diametro / 10, 2) / 4;
+        }
+        
+        // ========== ABA 1: DETALHAMENTO PRINCIPAL ==========
+        document.getElementById('calcular-detalhamento').addEventListener('click', calcularDetalhamentoPrincipal);
+        document.getElementById('limpar-detalhamento').addEventListener('click', () => {
+            // Resetar valores
+            document.getElementById('bw').value = 0.20;
+            document.getElementById('h').value = 0.60;
+            document.getElementById('d').value = 0.55;
+            document.getElementById('classe-agressividade').value = 'I';
+            document.getElementById('as-tracao').value = 8.0;
+            document.getElementById('as-compressao').value = 0.0;
+            document.getElementById('diametro-long').value = 10;
+            document.getElementById('num-camadas').value = 1;
+            document.getElementById('diametro-estribo').value = 5;
+            document.getElementById('espacamento-estribo').value = 15;
+            document.getElementById('num-ramos').value = 2;
+            
+            // Recalcular
+            calcularDetalhamentoPrincipal();
+        });
+        
+        // Event listeners para inputs da primeira aba
+        const inputsDetalhamento = document.querySelectorAll('#tab-detalhamento input, #tab-detalhamento select');
+        inputsDetalhamento.forEach(input => {
+            input.addEventListener('change', calcularDetalhamentoPrincipal);
+            input.addEventListener('input', calcularDetalhamentoPrincipal);
+        });
+        
+        function calcularDetalhamentoPrincipal() {
+            // Obter valores
+            const bw = parseFloat(document.getElementById('bw').value);
+            const h = parseFloat(document.getElementById('h').value);
+            const d = parseFloat(document.getElementById('d').value);
+            const classeAgressividade = document.getElementById('classe-agressividade').value;
+            const asTracao = parseFloat(document.getElementById('as-tracao').value);
+            const asCompressao = parseFloat(document.getElementById('as-compressao').value);
+            const diametroLong = parseFloat(document.getElementById('diametro-long').value);
+            const numCamadas = parseInt(document.getElementById('num-camadas').value);
+            const diametroEstribo = parseFloat(document.getElementById('diametro-estribo').value);
+            const espacamentoEstribo = parseFloat(document.getElementById('espacamento-estribo').value);
+            const numRamos = parseInt(document.getElementById('num-ramos').value);
+            
+            // Converter unidades
+            const bw_cm = bw * 100;
+            const h_cm = h * 100;
+            const d_cm = d * 100;
+            
+            // 1. Cobrimento
+            const cobrimento = cobrimentosPorClasse[classeAgressividade].viga;
+            
+            // 2. Armadura mínima
+            const asMin = 0.15 / 100 * bw_cm * h_cm; // 0,15% em cm²
+            const verifAsMin = asTracao >= asMin;
+            
+            // 3. Armadura máxima
+            const asMax = 4 / 100 * bw_cm * h_cm; // 4% em cm²
+            const asTotal = asTracao + asCompressao;
+            const verifAsMax = asTotal <= asMax;
+            
+            // 4. Armadura de pele (se h > 60cm)
+            const asPele = h > 0.6 ? 0.10 / 100 * bw_cm * h_cm : 0; // 0,10% em cm² por face
+            
+            // 5. Espaçamentos mínimos
+            const dmax = 19; // Brita 1 - 19 mm
+            const espMinHorizontal = Math.max(20, diametroLong, 1.2 * dmax);
+            const espMinVertical = Math.max(20, diametroLong, 0.5 * dmax);
+            
+            // Espaçamento máximo dos estribos
+            const espMaxEstribo = Math.min(0.6 * d_cm, 30); // em cm
+            
+            // Verificação do espaçamento dos estribos
+            const verifEspEstribo = espacamentoEstribo <= espMaxEstribo;
+            
+            // 6. Diâmetro mínimo dos estribos
+            const diametroMinEstribo = diametroLong / 4;
+            const verifDiametroEstribo = diametroEstribo >= diametroMinEstribo;
+            
+            // 7. Número mínimo de barras por camada (estimativa)
+            const areaBarraLong = calcularAreaBarra(diametroLong);
+            const numBarrasNecessarias = Math.ceil(asTracao / areaBarraLong);
+            const numBarrasPorCamada = Math.ceil(numBarrasNecessarias / numCamadas);
+            
+            // 8. Espaçamento horizontal real estimado
+            const larguraDisponivel = bw_cm * 10 - 2 * (cobrimento + diametroEstribo); // em mm
+            const espacamentoHorizontalReal = larguraDisponivel / (numBarrasPorCamada + 1);
+            const verifEspHorizontal = espacamentoHorizontalReal >= espMinHorizontal;
+            
+            // Atualizar resultados na interface
+            document.getElementById('cobrimento-min').innerHTML = `${cobrimento} <span class="result-unit">mm</span>`;
+            document.getElementById('cobrimento-min').nextElementSibling.textContent = `Para Classe de Agressividade ${classeAgressividade}`;
+            
+            document.getElementById('as-min').innerHTML = `${asMin.toFixed(2)} <span class="result-unit">cm²</span>`;
+            document.getElementById('as-max').innerHTML = `${asMax.toFixed(2)} <span class="result-unit">cm²</span>`;
+            document.getElementById('as-pele').innerHTML = h > 0.6 ? `${asPele.toFixed(2)} <span class="result-unit">cm²/face</span>` : "Não necessária";
+            
+            document.getElementById('esp-min-h').innerHTML = `${espMinHorizontal} <span class="result-unit">mm</span>`;
+            document.getElementById('esp-min-v').innerHTML = `${espMinVertical} <span class="result-unit">mm</span>`;
+            document.getElementById('esp-max-estribo').innerHTML = `${espMaxEstribo.toFixed(1)} <span class="result-unit">cm</span>`;
+            
+            // Atualizar validações
+            atualizarValidacaoMin(verifAsMin, asTracao, asMin);
+            atualizarValidacaoMax(verifAsMax, asTotal, asMax);
+            atualizarValidacaoPele(h, asPele);
+            
+            // Atualizar resultados gerais
+            atualizarResultadosGerais(bw, h, asTracao, asCompressao, numBarrasNecessarias, 
+                                      diametroLong, numCamadas, diametroEstribo, espacamentoEstribo, numRamos,
+                                      verifEspHorizontal, verifEspEstribo, verifDiametroEstribo);
+            
+            // Atualizar visualização
+            atualizarVisualizacaoSecao(bw, h, diametroLong, numBarrasPorCamada, numCamadas, diametroEstribo, cobrimento);
+        }
+        
+        function atualizarValidacaoMin(verif, asTracao, asMin) {
+            const validacaoMin = document.getElementById('validacao-min');
+            validacaoMin.innerHTML = `
+                <div class="validation-item">
+                    <div class="validation-indicator ${verif ? 'valid' : 'invalid'}"></div>
+                    <div class="validation-text">
+                        <strong>A<sub>s</sub> ≥ A<sub>s,min</sub> (0,15%):</strong> ${verif ? 'Atendido' : 'Não atendido'}
+                        <br>${asTracao.toFixed(2)} cm² ${verif ? '≥' : '<'} ${asMin.toFixed(2)} cm²
+                    </div>
+                </div>
+            `;
+        }
+        
+        function atualizarValidacaoMax(verif, asTotal, asMax) {
+            const validacaoMax = document.getElementById('validacao-max');
+            validacaoMax.innerHTML = `
+                <div class="validation-item">
+                    <div class="validation-indicator ${verif ? 'valid' : 'invalid'}"></div>
+                    <div class="validation-text">
+                        <strong>A<sub>s</sub> + A'<sub>s</sub> ≤ 4%:</strong> ${verif ? 'Atendido' : 'Não atendido'}
+                        <br>${asTotal.toFixed(2)} cm² ${verif ? '≤' : '>'} ${asMax.toFixed(2)} cm²
+                    </div>
+                </div>
+            `;
+        }
+        
+        function atualizarValidacaoPele(h, asPele) {
+            const validacaoPele = document.getElementById('validacao-pele');
+            if (h > 0.6) {
+                validacaoPele.innerHTML = `
+                    <div class="validation-item">
+                        <div class="validation-indicator valid"></div>
+                        <div class="validation-text">
+                            <strong>Armadura de pele necessária (h > 60 cm):</strong> ${asPele.toFixed(2)} cm² por face lateral
+                            <br>Espaçamento máximo: 20 cm ou d/3
+                        </div>
+                    </div>
+                `;
+            } else {
+                validacaoPele.innerHTML = `
+                    <div class="validation-item">
+                        <div class="validation-indicator"></div>
+                        <div class="validation-text">
+                            <strong>Armadura de pele:</strong> Não necessária (h ≤ 60 cm)
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        function atualizarResultadosGerais(bw, h, asTracao, asCompressao, numBarras, diametroLong, numCamadas, 
+                                          diametroEstribo, espEstribo, numRamos, verifEspH, verifEspEstribo, verifDiametroEstribo) {
+            const resultados = document.getElementById('resultados-detalhamento');
+            
+            const taxaTracao = (asTracao / (bw * h * 10000)) * 100;
+            const taxaTotal = ((asTracao + asCompressao) / (bw * h * 10000)) * 100;
+            
+            resultados.innerHTML = `
+                <div class="result-card ${verifEspH ? 'success' : 'warning'}">
+                    <div class="result-label">Configuração Longitudinal</div>
+                    <div class="result-value">${numBarras}φ${diametroLong}</div>
+                    <div class="result-detail">
+                        ${numCamadas} camada(s)<br>
+                        Taxa de armadura: ${taxaTracao.toFixed(2)}%<br>
+                        ${verifEspH ? 'Espaçamento horizontal OK' : 'Espaçamento horizontal insuficiente'}
+                    </div>
+                </div>
+                
+                <div class="result-card ${verifEspEstribo ? 'success' : 'warning'}">
+                    <div class="result-label">Configuração Transversal</div>
+                    <div class="result-value">${diametroEstribo} mm c/${espEstribo}</div>
+                    <div class="result-detail">
+                        ${numRamos} ramos<br>
+                        ${verifEspEstribo ? 'Espaçamento OK' : 'Espaçamento excessivo'}<br>
+                        ${verifDiametroEstribo ? 'Diâmetro OK' : 'Diâmetro insuficiente'}
+                    </div>
+                </div>
+                
+                <div class="result-card highlight">
+                    <div class="result-label">Taxa de Armadura Total</div>
+                    <div class="result-value">${taxaTotal.toFixed(2)} <span class="result-unit">%</span></div>
+                    <div class="result-detail">
+                        Limites: 0,15% a 4%<br>
+                        ${taxaTotal >= 0.15 && taxaTotal <= 4 ? 'Dentro dos limites' : 'Fora dos limites'}
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">Área de Aço Comprimida</div>
+                    <div class="result-value">${asCompressao.toFixed(2)} <span class="result-unit">cm²</span></div>
+                    <div class="result-detail">
+                        ${asCompressao > 0 ? 'Armadura dupla' : 'Armadura simples'}<br>
+                        ${asCompressao > 0 ? 'Estribos devem proteger contra flambagem' : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function atualizarVisualizacaoSecao(bw, h, diametroLong, numBarrasPorCamada, numCamadas, diametroEstribo, cobrimento) {
+            const secao = document.getElementById('secao-transversal');
+            secao.innerHTML = '';
+            
+            // Criar canvas para desenho
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            secao.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Escalas
+            const escalaX = 350 / (bw * 100); // pixels por cm
+            const escalaY = 350 / (h * 100); // pixels por cm
+            
+            // Desenhar contorno da viga
+            const xInicio = 25;
+            const yInicio = 25;
+            const larguraPx = bw * 100 * escalaX;
+            const alturaPx = h * 100 * escalaY;
+            
+            // Fundo da viga
+            ctx.fillStyle = '#ecf0f1';
+            ctx.fillRect(xInicio, yInicio, larguraPx, alturaPx);
+            
+            // Borda da viga
+            ctx.strokeStyle = '#95a5a6';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(xInicio, yInicio, larguraPx, alturaPx);
+            
+            // Desenhar estribo
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 3]);
+            ctx.strokeRect(
+                xInicio + (cobrimento/10 * escalaX), 
+                yInicio + (cobrimento/10 * escalaY), 
+                larguraPx - 2*(cobrimento/10 * escalaX), 
+                alturaPx - 2*(cobrimento/10 * escalaY)
+            );
+            ctx.setLineDash([]);
+            
+            // Desenhar barras longitudinais
+            const diametroBarraPx = Math.max(5, (diametroLong/10) * Math.min(escalaX, escalaY));
+            
+            for (let camada = 0; camada < numCamadas; camada++) {
+                const yPos = yInicio + (cobrimento/10 * escalaY) + (diametroEstribo/10 * escalaY) + 
+                            (camada * (alturaPx - 2*(cobrimento/10 * escalaY) - 2*(diametroEstribo/10 * escalaY)) / (numCamadas + 1));
+                
+                for (let i = 0; i < numBarrasPorCamada; i++) {
+                    const xPos = xInicio + (cobrimento/10 * escalaX) + (diametroEstribo/10 * escalaX) + 
+                                ((i + 1) * (larguraPx - 2*(cobrimento/10 * escalaX) - 2*(diametroEstribo/10 * escalaX)) / (numBarrasPorCamada + 1));
+                    
+                    // Desenhar barra
+                    ctx.fillStyle = '#e74c3c';
+                    ctx.beginPath();
+                    ctx.arc(xPos, yPos, diametroBarraPx/2, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Contorno da barra
+                    ctx.strokeStyle = '#c0392b';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                    
+                    // Texto do diâmetro (apenas em algumas barras para não poluir)
+                    if (i === Math.floor(numBarrasPorCamada/2) && camada === 0) {
+                        ctx.fillStyle = '#2c3e50';
+                        ctx.font = '12px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`φ${diametroLong}`, xPos, yPos - diametroBarraPx - 5);
+                    }
+                }
+            }
+            
+            // Indicadores de dimensão
+            ctx.strokeStyle = '#7f8c8d';
+            ctx.lineWidth = 1;
+            
+            // Largura
+            ctx.beginPath();
+            ctx.moveTo(xInicio, yInicio + alturaPx + 15);
+            ctx.lineTo(xInicio + larguraPx, yInicio + alturaPx + 15);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${(bw*100).toFixed(0)} cm`, xInicio + larguraPx/2, yInicio + alturaPx + 30);
+            
+            // Altura
+            ctx.beginPath();
+            ctx.moveTo(xInicio + larguraPx + 15, yInicio);
+            ctx.lineTo(xInicio + larguraPx + 15, yInicio + alturaPx);
+            ctx.stroke();
+            
+            ctx.save();
+            ctx.translate(xInicio + larguraPx + 30, yInicio + alturaPx/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.textAlign = 'center';
+            ctx.fillText(`${(h*100).toFixed(0)} cm`, 0, 0);
+            ctx.restore();
+            
+            // Indicador de cobrimento
+            ctx.fillStyle = '#8e44ad';
+            ctx.font = '11px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(`c = ${cobrimento} mm`, xInicio + 5, yInicio + 15);
+        }
+        
+        // ========== ABA 2: ANCORAGEM E EMENDAS ==========
+        document.getElementById('calcular-ancoragem').addEventListener('click', calcularAncoragemEmendas);
+        document.getElementById('limpar-ancoragem').addEventListener('click', () => {
+            document.getElementById('fck-ancoragem').value = 30;
+            document.getElementById('fyk-ancoragem').value = 500;
+            document.getElementById('diametro-ancoragem').value = 10;
+            document.getElementById('zona-aderencia').value = 'boa';
+            document.getElementById('tipo-emenda').value = 'tracionada';
+            document.getElementById('percentual-emenda').value = '100';
+            
+            calcularAncoragemEmendas();
+        });
+        
+        // Preencher tabela de ancoragem
+        function preencherTabelaAncoragem() {
+            const tabela = document.getElementById('tabela-ancoragem');
+            tabela.innerHTML = '';
+            
+            tabelaAncoragemCA50.forEach(linha => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${linha.diametro}</td>
+                    <td>${linha.boa}</td>
+                    <td>${linha.ma}</td>
+                    <td>${linha.gancho}</td>
+                `;
+                tabela.appendChild(tr);
+            });
+        }
+        
+        function calcularAncoragemEmendas() {
+            // Obter valores
+            const fck = parseFloat(document.getElementById('fck-ancoragem').value);
+            const fyk = parseFloat(document.getElementById('fyk-ancoragem').value);
+            const diametro = parseFloat(document.getElementById('diametro-ancoragem').value);
+            const zonaAderencia = document.getElementById('zona-aderencia').value;
+            const tipoEmenda = document.getElementById('tipo-emenda').value;
+            const percentualEmenda = parseFloat(document.getElementById('percentual-emenda').value);
+            
+            // Encontrar dados na tabela
+            const dadosBarra = tabelaAncoragemCA50.find(item => item.diametro === diametro);
+            
+            if (!dadosBarra) {
+                alert(`Diâmetro ${diametro} mm não encontrado na tabela!`);
+                return;
+            }
+            
+            // Comprimento de ancoragem básico
+            let lb = zonaAderencia === 'boa' ? dadosBarra.boa : dadosBarra.ma;
+            
+            // Fatores de correção
+            // 1. Fator de redução por excesso de armadura (α1)
+            const alpha1 = 1.0; // Assume-se que As,calc = As,efetivo
+            
+            // 2. Fator de redução por gancho (α2)
+            const comGancho = tipoEmenda === 'tracionada' && diametro < 32;
+            const alpha2 = comGancho ? 0.7 : 1.0;
+            
+            // 3. Fator de redução por barras comprimidas (α3)
+            const alpha3 = tipoEmenda === 'comprimida' ? 0.7 : 1.0;
+            
+            // Comprimento de ancoragem necessário
+            let lbNec = lb * alpha1 * alpha2 * alpha3;
+            
+            // Comprimento mínimo
+            const lbMin = Math.max(0.3 * lb, 10 * diametro, 10); // em cm
+            
+            // Ajustar lbNec para o mínimo
+            lbNec = Math.max(lbNec, lbMin);
+            
+            // Comprimento com gancho (se aplicável)
+            const lbGancho = comGancho ? dadosBarra.gancho : null;
+            
+            // Comprimento de emenda por traspasse
+            // Fator α6 depende do percentual de barras emendadas
+            let alpha6 = 1.0;
+            if (percentualEmenda <= 25) alpha6 = 1.0;
+            else if (percentualEmenda <= 33) alpha6 = 1.2;
+            else if (percentualEmenda <= 50) alpha6 = 1.4;
+            else if (percentualEmenda <= 100) alpha6 = 2.0;
+            
+            const l0 = alpha6 * lbNec;
+            
+            // Atualizar resultados
+            const resultados = document.getElementById('resultados-ancoragem');
+            resultados.innerHTML = `
+                <div class="result-card highlight">
+                    <div class="result-label">Comprimento de ancoragem básico (l<sub>b</sub>)</div>
+                    <div class="result-value">${lb} <span class="result-unit">cm</span></div>
+                    <div class="result-detail">
+                        φ${diametro} mm, ${zonaAderencia === 'boa' ? 'boa aderência' : 'má aderência'}<br>
+                        CA-${fyk}, C${fck}
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">Comprimento de ancoragem necessário (l<sub>b,nec</sub>)</div>
+                    <div class="result-value">${Math.ceil(lbNec)} <span class="result-unit">cm</span></div>
+                    <div class="result-detail">
+                        α1 = ${alpha1}, α2 = ${alpha2}, α3 = ${alpha3}<br>
+                        l<sub>b,min</sub> = ${lbMin.toFixed(1)} cm
+                    </div>
+                </div>
+                
+                ${comGancho ? `
+                <div class="result-card warning">
+                    <div class="result-label">Comprimento com gancho</div>
+                    <div class="result-value">${lbGancho} <span class="result-unit">cm</span></div>
+                    <div class="result-detail">
+                        Gancho semicircular (135°)<br>
+                        Acréscimo de 12φ = ${12 * diametro/10} cm
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="result-card success">
+                    <div class="result-label">Comprimento de emenda por traspasse (l<sub>0</sub>)</div>
+                    <div class="result-value">${Math.ceil(l0)} <span class="result-unit">cm</span></div>
+                    <div class="result-detail">
+                        ${tipoEmenda === 'tracionada' ? 'Barra tracionada' : 'Barra comprimida'}<br>
+                        ${percentualEmenda}% emendadas, α6 = ${alpha6}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // ========== ABA 3: SITUAÇÕES ESPECIAIS ==========
+        // Controles de exibição condicional
+        document.getElementById('apoio-indireto').addEventListener('change', function() {
+            document.getElementById('div-forca-indireta').style.display = this.checked ? 'block' : 'none';
+            document.getElementById('info-apoio-indireto').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('torcao').addEventListener('change', function() {
+            document.getElementById('div-torcao').style.display = this.checked ? 'block' : 'none';
+            document.getElementById('info-torcao').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('furo-viga').addEventListener('change', function() {
+            document.getElementById('div-furo').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('flambagem').addEventListener('change', function() {
+            document.getElementById('info-flambagem').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('calcular-especiais').addEventListener('click', calcularSituacoesEspeciais);
+        document.getElementById('limpar-especiais').addEventListener('click', () => {
+            document.getElementById('apoio-indireto').checked = false;
+            document.getElementById('torcao').checked = false;
+            document.getElementById('furo-viga').checked = false;
+            document.getElementById('flambagem').checked = false;
+            
+            document.getElementById('div-forca-indireta').style.display = 'none';
+            document.getElementById('div-torcao').style.display = 'none';
+            document.getElementById('div-furo').style.display = 'none';
+            document.getElementById('info-flambagem').style.display = 'none';
+            
+            document.getElementById('forca-indireta').value = 100;
+            document.getElementById('momento-torcante').value = 50;
+            document.getElementById('diametro-furo').value = 10;
+            document.getElementById('distancia-apoio').value = 100;
+            document.getElementById('tipo-furo').value = 'transversal';
+            
+            calcularSituacoesEspeciais();
+        });
+        
+        function calcularSituacoesEspeciais() {
+            const resultados = document.getElementById('resultados-especiais');
+            let html = '';
+            
+            // Apoio indireto
+            if (document.getElementById('apoio-indireto').checked) {
+                const forcaIndireta = parseFloat(document.getElementById('forca-indireta').value);
+                const fyd = 500 / 1.15; // MPa
+                const asSusp = (forcaIndireta * 1000) / fyd; // mm²
+                const asSuspCm2 = asSusp / 100; // cm²
+                
+                html += `
+                    <div class="result-card warning">
+                        <div class="result-label">Apoio Indireto - Armadura de Suspensão</div>
+                        <div class="result-value">${asSuspCm2.toFixed(2)} <span class="result-unit">cm²</span></div>
+                        <div class="result-detail">
+                            Força indireta: ${forcaIndireta} kN<br>
+                            A<sub>s,susp</sub> = F<sub>ind</sub> / f<sub>yd</sub><br>
+                            Distribuir em estribos adicionais na região
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Torção
+            if (document.getElementById('torcao').checked) {
+                const momentoTorcante = parseFloat(document.getElementById('momento-torcante').value);
+                
+                html += `
+                    <div class="result-card danger">
+                        <div class="result-label">Torção - Recomendações</div>
+                        <div class="result-value">T<sub>d</sub> = ${momentoTorcante} kN.m</div>
+                        <div class="result-detail">
+                            • Estribos fechados com ganchos a 45°<br>
+                            • Espaçamento máximo: 15 cm<br>
+                            • Barras longitudinais na periferia (máx. 35 cm)<br>
+                            • Somar às armaduras de flexão e cisalhamento
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Furos em vigas
+            if (document.getElementById('furo-viga').checked) {
+                const diametroFuro = parseFloat(document.getElementById('diametro-furo').value);
+                const distanciaApoio = parseFloat(document.getElementById('distancia-apoio').value);
+                const tipoFuro = document.getElementById('tipo-furo').value;
+                const h = parseFloat(document.getElementById('h').value);
+                const bw = parseFloat(document.getElementById('bw').value);
+                const cobrimento = cobrimentosPorClasse[document.getElementById('classe-agressividade').value].viga;
+                
+                let criteriosAtendidos = true;
+                let mensagens = [];
+                
+                if (tipoFuro === 'transversal') {
+                    // Furo transversal (na largura)
+                    if (diametroFuro > (bw * 100 / 3)) {
+                        criteriosAtendidos = false;
+                        mensagens.push(`Furo (${diametroFuro} cm) > b/3 (${(bw * 100 / 3).toFixed(1)} cm)`);
+                    }
+                } else {
+                    // Furo vertical (na altura)
+                    if (diametroFuro > (h * 100 / 3)) {
+                        criteriosAtendidos = false;
+                        mensagens.push(`Furo (${diametroFuro} cm) > h/3 (${(h * 100 / 3).toFixed(1)} cm)`);
+                    }
+                    
+                    if (distanciaApoio < 2 * h * 100) {
+                        criteriosAtendidos = false;
+                        mensagens.push(`Distância ao apoio (${distanciaApoio} cm) < 2h (${(2 * h * 100).toFixed(0)} cm)`);
+                    }
+                }
+                
+                // Verificação comum
+                const afastamentoMin = Math.max(5, 2 * cobrimento / 10); // em cm
+                if (afastamentoMin > 5) {
+                    criteriosAtendidos = false;
+                    mensagens.push(`Afastamento mínimo: ${afastamentoMin.toFixed(1)} cm (2c = ${(2 * cobrimento / 10).toFixed(1)} cm)`);
+                }
+                
+                html += `
+                    <div class="result-card ${criteriosAtendidos ? 'success' : 'danger'}">
+                        <div class="result-label">Furo em Viga - Verificação</div>
+                        <div class="result-value">${criteriosAtendidos ? 'Dispensável' : 'Necessita cálculo'}</div>
+                        <div class="result-detail">
+                            Furo ${tipoFuro}: φ ${diametroFuro} cm<br>
+                            Distância ao apoio: ${distanciaApoio} cm<br>
+                            ${criteriosAtendidos ? 'Critérios da NBR 6118 atendidos' : 'Critérios NÃO atendidos:'}
+                            ${!criteriosAtendidos ? '<br>• ' + mensagens.join('<br>• ') : ''}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Flambagem lateral
+            if (document.getElementById('flambagem').checked) {
+                const h = parseFloat(document.getElementById('h').value);
+                const bw = parseFloat(document.getElementById('bw').value);
+                const relacao = (h * 100) / (bw * 100);
+                
+                html += `
+                    <div class="result-card warning">
+                        <div class="result-label">Instabilidade Lateral (Flambagem)</div>
+                        <div class="result-value">h/b = ${relacao.toFixed(1)}</div>
+                        <div class="result-detail">
+                            Viga sem travamento lateral na zona comprimida<br>
+                            ${relacao > 4 ? '<strong>Risco de flambagem lateral - verificar!</strong>' : 'Proporção aceitável'}
+                            <br>Largura mínima recomendada: L/10 a L/15
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (html === '') {
+                html = `
+                    <div class="result-card">
+                        <div class="result-label">Nenhuma situação especial selecionada</div>
+                        <div class="result-value">-</div>
+                        <div class="result-detail">
+                            Selecione pelo menos uma situação especial acima para análise
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultados.innerHTML = html;
+        }
+        
+        // ========== INICIALIZAÇÃO ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Calcular primeira aba
+            calcularDetalhamentoPrincipal();
+            
+            // Preencher tabela de ancoragem
+            preencherTabelaAncoragem();
+            
+            // Calcular ancoragem
+            calcularAncoragemEmendas();
+            
+            // Calcular situações especiais
+            calcularSituacoesEspeciais();
+        });
+    </script>
+</body>
+</html>
